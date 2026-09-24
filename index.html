@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .space{
+            height: 100%;
+        }
+        #board{
+            width:  400px;
+            height: 400px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="board">
+            <button class="space"></button>
+            <button class="space"></button>
+            <button class="space"></button>
+            <button class="space"></button>
+            <button class="space"></button>
+            <button class="space"></button>
+            <button class="space"></button>
+            <button class="space"></button>
+            <button class="space"></button>
+        </div>
+    </div>
+    <script>
+        const spaces = document.getElementsByClassName("space")
+        console.log(spaces);
+        for(space of spaces){
+            space.addEventListener("click", handleSpaceClick);
+
+ 
+        }
+        function handleSpaceClick(){
+            this.innerHTML ="X";
+            this.disabled = true;
+
+        }
+        //Based on this starter code, write Tic Tac Toe
+            //Use at least 5 functions (check for win, tie, show win screen, show tie screen, reset, update turn (show whose turn it is))
+            //Do not allow clicking an element that has already been taken
+            //Style it all to look nice
+ 
+            //extension:
+            //use setTimeout() to simulate a 1 player vs computer game.
+            // set timeout for the cpu would be to simulate a pause before the computer goes.
+    </script>
+</body>
+</html>
+ 
