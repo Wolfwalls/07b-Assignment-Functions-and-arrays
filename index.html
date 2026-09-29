@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body{#userwin{
+            display: none;
+        }background-color: black;
+        #compwin{
+            display: none;
+        }
+        color: white;}
+        button{
+            background-color: black;
+            color: rgb(255, 161, 84);
+            border: 10px groove rgb(190, 120, 255);
+            font-size: 25px;
+            padding: 20px;
+        }
+        button.hover
+        
+        
+        .container{
+            padding: auto;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+
+        }
         .space{
             height: 100%;
         }
@@ -14,6 +38,19 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
     }
+        body.Userwin{
+            #userwin{
+                display: flex;
+                color: rgb(255, 154, 60);
+
+            }
+        }
+        body.Compwin{
+            #compwin{
+                display: flex;
+                color: rgb(90, 161, 255);
+            }
+        }
     </style>
 </head>
 <body>
@@ -29,19 +66,101 @@
             <button class="space"></button>
             <button class="space"></button>
         </div>
+        <h1 id="userwin">User Won</h1>
+        <h1 id="compwin">Computer Won</h1>
     </div>
     <script>
         const spaces = document.getElementsByClassName("space")
+        let playerspaces = [];
+        let compspaces = [];
+        let takenspaces =[];
+        let computerturn;
         console.log(spaces);
         for(space of spaces){
             space.addEventListener("click", handleSpaceClick);
-
+ 
  
         }
-        function handleSpaceClick(){
-            this.innerHTML ="X";
-            this.disabled = true;
+ 
+        function compMove(){
+               for(space in spaces){
+                spaces[space].disabled = true
+               }
+               let computerturn = Math.floor(Math.random() * spaces.length)
+ 
+               while (spaces[computerturn].innerHTML != ""){
+                 computerturn = Math.floor(Math.random() * spaces.length)
+               }
+               
+               setTimeout(function(){
+                spaces[computerturn].innerHTML = "O";
+                //do not allow the player to go until this point
+                //reenable the buttons
+                for(space in spaces){
+                    spaces[space].disabled = false
+                }
+                if(checkWin()){
+                     console.log("Computer won");
+                     document.body.classList.add("Compwin")
+                     for(space in spaces){
+                    spaces[space].disabled = true
+                }
+                     return
 
+                 }
+                 
+               }, 1000)
+             
+               
+               
+            console.log(computerturn)
+            spaces[computerturn].innerHTML = "O"
+            spaces[computerturn].disabled = true
+            compspaces.push(spaces[computerturn])
+            takenspaces.push(spaces[computerturn])
+             
+           
+           
+        }
+        // Math.floor(Math.random() * spaces.length)+ 1
+        function handleSpaceClick(){
+            if(this.innerHTML != "") return;
+            if(takenspaces.length < spaces.length){
+                this.innerHTML ="X";
+                this.disabled = true;
+                playerspaces.push(this)
+                takenspaces.push(this)
+                if(checkWin()){
+                    console.log("User won");
+                    document.body.classList.add("Userwin")
+                    for(space in spaces){
+                    spaces[space].disabled = true
+                }
+                    return
+                }
+                if(takenspaces.length < spaces.length){
+                    compMove()
+ 
+                }
+            }else {
+                console.log("Stop that")
+            }
+           
+ 
+        }
+ 
+        function checkWin(){
+            const winCond = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6] ]
+            for(let win of winCond){
+                if(spaces[win[0]].innerHTML == spaces[win[1]].innerHTML &&
+                    spaces[win[1]].innerHTML == spaces[win[2]].innerHTML &&
+                    spaces[win[0]].innerHTML != ""){
+                        
+                        return true
+                    }
+               
+            }
+            return false
         }
         //Based on this starter code, write Tic Tac Toe
             //Use at least 5 functions (check for win, tie, show win screen, show tie screen, reset, update turn (show whose turn it is))
@@ -54,4 +173,3 @@
     </script>
 </body>
 </html>
- 
